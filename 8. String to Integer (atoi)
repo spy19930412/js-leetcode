@@ -1,0 +1,73 @@
+/**
+Reverse digits of an integer.
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+click to show spoilers.
+Have you thought about this?
+Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
+For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+Update (2014-11-10):
+Test cases had been added to test the overflow behavior.
+*/
+
+
+/**
+ * @param {string} str
+ * @return {number}
+ */
+var myAtoi = function(str) {
+    var len = str.length,
+        isNegative = null,
+        result = 0,
+        numberStarted = false,
+        cur,
+        i;
+    
+    for (i = 0;i < len;i++){
+        if(str.charAt(i) === ' '){
+            if(!numberStarted){
+                continue;
+            }else{
+                return getResult(isNegative,result);
+            }
+        }
+        
+        if(isNegative === null){
+            if(str.charAt(i) === '-'){
+                isNegative = true;
+                numberStarted = true;
+                continue;
+            }else if(str.charAt(i) === '+'){
+                isNegative = false;
+                numberStarted = true;
+                continue;
+            }
+        }
+        
+        cur = parseInt(str.charAt(i));
+        if(!isNaN(cur)){
+            result = result * 10 + cur;
+            if(!numberStarted){
+                numberStarted = true;
+            }
+        }else{
+            return getResult(isNegative,result);
+        }
+    }
+    return getResult(isNegative,result);
+};
+
+
+    function getResult(isNegative,result){
+        result = isNegative? result * (-1) : result;
+        
+        if(result > (2*(1<<30)-1)){
+            result = (2*(1<<30)-1);
+        }else if(result < (1<<31)){
+            result = (1<<31);
+        }
+        
+        return result;
+    }
