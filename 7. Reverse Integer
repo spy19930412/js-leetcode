@@ -16,16 +16,12 @@ Test cases had been added to test the overflow behavior.
  * @return {number}
  */
 var reverse = function(x) {
-    // x = x + "";
-    // return x.split("").reverse().join(""); 
     var isNegative = x<0? true: false;
     var result = 0;
     var reminder;
-    
     if(isNegative){
         x = x * (-1);
     }
-    
     while (x !== 0){
         reminder = x % 10;
         result = result * 10 + reminder;
@@ -34,8 +30,19 @@ var reverse = function(x) {
     if(result >= 2147483648){
         return 0;
     }
-    
     return isNegative? result*(-1): result;
-    
-    
+};
+var reverse = function(x) {
+    var isNegative = x<0? true: false;
+    var result = 0;
+    var reminder;
+    if(isNegative){
+        x = x * (-1);
+    }
+    x = x + "";
+    result = parseInt(x.split("").reverse().join("")); 
+    if(result >= 2147483648){
+        return 0;
+    }
+    return isNegative? result*(-1): result;
 };
