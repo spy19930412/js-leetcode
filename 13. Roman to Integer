@@ -1,0 +1,33 @@
+/**
+ * @param {string} s
+ * @return {number}
+ * 罗马数字采用七个罗马字母作数字、即 Ⅰ（1）、X（10）、C（100）、M（1000）、V（5）、L（50）、D（500）。记数的方法：
+     相同的数字连写，所表示的数等于这些数字相加得到的数，如 Ⅲ=3；
+     小的数字在大的数字的右边，所表示的数等于这些数字相加得到的数，如 Ⅷ=8、Ⅻ=12；
+     小的数字（限于 Ⅰ、X 和 C）在大的数字的左边，所表示的数等于大数减小数得到的数，如 Ⅳ=4、Ⅸ=9；
+ */
+var romanToInt = function(s) {
+    var len = s.length,
+        map = {},
+        result = 0,
+        i;
+    if(len === 0){
+        return 0;
+    }
+    map['I'] = 1;
+    map['X'] = 10;
+    map['C'] = 100;
+    map['M'] = 1000;
+    map['V'] = 5;
+    map['L'] = 50;
+    map['D'] = 500;
+    
+    for(i = 0;i < len;i++){
+        result += map[s.charAt(i)];
+        
+        if(i >0 && map[s.charAt(i)] >map[s.charAt(i-1)]){
+            result -= 2 * map[s.charAt(i-1)];
+        }
+    }
+    return result;
+};
