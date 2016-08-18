@@ -1,0 +1,32 @@
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function(x) {
+    //negative number 
+    if(x < 0){
+        return false;
+    }
+    
+    var len = 1;
+    while (x /len >= 10)
+        len *= 10;
+    
+    
+    while (x >1){
+        //get the head and tail number
+        var left = Math.floor(x / len);
+        var right = Math.floor(x % 10);
+        if(left !== right)
+            return false;
+        else {
+            //remove the head and tail number
+            x = Math.floor((x % len) / 10);
+            len = Math.floor(len/100);
+            //len 缩短了两位
+        }
+    }
+    
+    return true;
+    
+};
