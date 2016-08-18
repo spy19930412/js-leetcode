@@ -1,0 +1,44 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+ /**
+  * 这一题是典型的使用压栈的方式解决的问题，题目中还有一种 valid 情况没有说明，需要我们自己考虑的，就是 "({[]})" 这种层层嵌套但
+可以完全匹配的，也是 valid 的一种。解题思路是这样的：我们对字符串 S 中的每一个字符 C，如果 C 不是右括号，就压入栈 stack 中。
+如果 C 是右括号，判断 stack 是不是空的，空则说明没有左括号，直接返回 not valid，非空就取出栈顶的字符 pre 来对比，如果是匹配
+的，就弹出栈顶的字符，继续取 S 中的下一个字符；如果不匹配，说明不是 valid 的，直接返回。当我们遍历了一次字符串 S 后，注意
+这里还有一种情况，就是 stack 中还有残留的字符没有得到匹配，即此时 stack 不是空的，这时说明 S 不是 valid 的，因为只要 valid，一
+定全都可以得到匹配使左括号弹出。
+*/
+var isValid = function(s) {
+    if (s === null){
+        return false;
+    }
+    var stack = [],
+        sets = {'(':')' ,'{':'}','[':']'},//有趣
+        len = s.length,
+        cur,
+        stackTop,
+        i;
+    for (i = 0; i < len; i++){
+        cur = s.charAt(i);
+        if (sets.hasOwnProperty(cur)){
+            stack.push(cur);
+        } else {
+            if (stack.length === 0){
+                return false;
+            } else {
+                stackTop = stack.pop();//已经出栈
+                if (sets[stackTop] !== cur){
+                    return false;
+                }
+            }
+        }
+    }    
+    if (stack.length === 0){
+        return true;
+    } else {
+        return false;
+    }
+        
+};
