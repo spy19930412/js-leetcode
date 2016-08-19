@@ -1,0 +1,22 @@
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function(nums, val) {
+    var len = nums.length;
+    if(len === 0){
+        return 0;
+    }
+    var deletednums = 0,
+        i;
+    for(i = 0;i < len;++i){
+        if(nums[i] === val){
+            deletednums++;
+        }
+        else if(deletednums>0){
+            nums[i-deletednums] = nums[i];
+        }
+    }
+    return len-deletednums;
+};
